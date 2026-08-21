@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World Frontend</title>
+</head>
+<body>
+    <h1>Frontend</h1>
+    <button onclick="loadHello()">GET /helloworld</button>
+    <p id="result">Noch keine Antwort</p>
+
+    <script>
+        async function loadHello() {
+            const result = document.getElementById("result");
+
+            try {
+                const response = await fetch("http://127.0.0.1:8080/helloworld");
+
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+
+                result.textContent = await response.text();
+            } catch (error) {
+                result.textContent = "Fehler: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
