@@ -1,16 +1,13 @@
 {
-  "name": "backend",
-  "version": "0.1.0",
-  "description": "JS-Portierung des Rust/Axum Backends (hello world + CORS + Logging)",
-  "main": "src/main.js",
-  "type": "module",
+  "name": "rezept-planer-web",
+  "version": "1.0.0",
+  "description": "Browser-Frontend für den Rezept-Planer (batu-api). Reines Node/JS, keine Build-Tools.",
+  "private": true,
+  "main": "server.js",
   "scripts": {
-    "start": "node src/main.js",
-    "dev": "node --watch src/main.js"
+    "start": "node server.js"
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "cors": "^2.8.5",
-    "morgan": "^1.10.0"
+  "engines": {
+    "node": ">=18"
   }
 }
