@@ -1,13 +1,17 @@
 {
-  "name": "rezept-planer-web",
+  "name": "rezept-planer",
   "version": "1.0.0",
-  "description": "Browser-Frontend für den Rezept-Planer (batu-api). Reines Node/JS, keine Build-Tools.",
-  "private": true,
+  "description": "Rezept-Planer mit Express: Frontend + REST-API (Rezepte, Wochenpläne, Einkaufsliste)",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }

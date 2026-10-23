@@ -1,13 +1,13 @@
 /**
  * Rezept-Planer — Browser-Frontend, reines JavaScript.
  * Baut DOM und CSS zur Laufzeit selbst auf, damit index.html leer bleiben kann.
- * Spricht per fetch() mit der batu-api (axum): GET/POST /recipes, POST /plans, GET /plans/{id}.
+ * Spricht per fetch() mit der Express-API unter /api: GET/POST /recipes, POST /plans, GET /plans/:id.
  */
 (function () {
   'use strict';
 
   // ---------- Zustand ----------
-  let apiBase = localStorage.getItem('rp_api_base') || 'http://127.0.0.1:8080';
+  let apiBase = localStorage.getItem('rp_api_base') || (window.location.origin + '/api');
   let excludeList = [];
   let catalog = [];
 
@@ -198,7 +198,7 @@
         h('h1', {}, 'Rezept-Planer'),
         h('span', { class: 'kicker' }, 'für die Woche gedacht')
       ),
-      h('p', { class: 'lede' }, 'Wochenplan aus dem Katalog zusammenstellen, Einkaufsliste bekommen, Rezepte ergänzen. Spricht direkt mit der batu-api.'),
+      h('p', { class: 'lede' }, 'Wochenplan aus dem Katalog zusammenstellen, Einkaufsliste bekommen, Rezepte ergänzen. Läuft komplett auf Node.js + Express.'),
       h('div', { class: 'conn' },
         h('span', { class: 'dot', id: 'connDot' }),
         h('span', {}, 'API:'),
@@ -293,7 +293,7 @@
     app.append(header, main, toastEl);
 
     document.getElementById('apiBase').addEventListener('change', (e) => {
-      apiBase = e.target.value.trim() || 'http://localhost:8080';
+      apiBase = e.target.value.trim() || (window.location.origin + '/api');
       localStorage.setItem('rp_api_base', apiBase);
       checkConnection();
     });
