@@ -1,0 +1,39 @@
+# Eigene Pipeline nur fuer rana-frontend -- andere Repos bauen unabhaengig.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    name: lint, test, docker build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Kontrakte aus dem Shared-Repo, damit die Contract-Tests laufen. Das
+      # Repo ist privat: SHARED_REPO_TOKEN ist ein Fine-grained Personal Access
+      # Token mit "Contents: Read-only" nur auf Ezpcy/321-shared (Repo-Secret).
+      - uses: actions/checkout@v4
+        with:
+          repository: Ezpcy/321-shared
+          token: ${{ secrets.SHARED_REPO_TOKEN }}
+          path: shared
+      - run: echo "CONTRACTS_DIR=$GITHUB_WORKSPACE/shared/contracts" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      # REQUIRE_CONTRACTS: fehlen die Kontrakte, ist das ein Fehler statt
+      # eines stillen Ueberspringens.
+      - run: npm test
+        env:
+          REQUIRE_CONTRACTS: "1"
+
+      - name: Container-Image bauen
+        run: docker build -t rana-frontend:ci .

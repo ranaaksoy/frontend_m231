@@ -1,17 +1,39 @@
 {
-  "name": "rezept-planer",
+  "name": "rana-frontend",
   "version": "1.0.0",
-  "description": "Rezept-Planer mit Express: Frontend + REST-API (Rezepte, Wochenpläne, Einkaufsliste)",
+  "description": "Rezept-Planer: Web-Oberflaeche und Queue-Producer (Owner: Rana). Spricht per HTTP und AMQP mit der batu_api.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "node --require ./src/telemetry.js server.js",
+    "dev": "node --watch --require ./src/telemetry.js server.js",
+    "lint": "eslint .",
+    "test": "node --test"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "license": "MIT",
   "dependencies": {
-    "express": "^5.2.1"
-  }
+    "@opentelemetry/api": "^1.10.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.300.0",
+    "@opentelemetry/instrumentation-amqplib": "^0.71.0",
+    "@opentelemetry/instrumentation-express": "^0.72.0",
+    "@opentelemetry/instrumentation-http": "^0.300.0",
+    "@opentelemetry/resources": "^3.0.0",
+    "@opentelemetry/sdk-node": "^0.300.0",
+    "@opentelemetry/semantic-conventions": "^1.43.0",
+    "amqplib": "^2.2.0",
+    "express": "^5.3.0",
+    "jose": "^6.2.13",
+    "keycloak-js": "^26.2.3",
+    "pino": "^10.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0"
+  },
+  "private": true
 }
